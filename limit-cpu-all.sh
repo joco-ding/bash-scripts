@@ -7,7 +7,7 @@ do
 done
 
 whoami=`/usr/bin/whoami`
-for PID in $(/usr/bin/ps -aux | grep $whoami | grep -v cpulimit | grep -v "limitall.sh" | grep -v grep | awk '{print $2}')
+for PID in $(/usr/bin/ps -aux | grep $whoami | grep -v cpulimit | grep -v "limit-cpu-all.sh" | grep -v grep | awk '{print $2}')
 do
 	cpuusage=`ps -p $PID -o %cpu | grep -v CPU`
 	if [ "$cpuusage" == "" ]; then
