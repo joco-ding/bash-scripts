@@ -1,5 +1,8 @@
 #!/bin/bash
 
+MAXCPULIMIT=20
+MINCPUDETECT=10
+
 arr=()
 for OUTPUT in $(/usr/bin/ps -ax | grep cpulimit | grep -v grep | awk '{print $10}')
 do
@@ -14,7 +17,7 @@ do
 		continue
 	fi
 
-	compare=`echo | awk "{ print (10 < $cpuusage)?1 : 0 }"`
+	compare=`echo | awk "{ print ($MINCPUDETECT < $cpuusage)?1 : 0 }"`
 
 	if [ $compare -eq 1 ]; then
 		echo -n "$PID $cpuusage "
@@ -29,7 +32,7 @@ do
 		echo $isexisted
 		if [ "$isexisted" == "Belum" ]; then
 			echo "lanjut"
-			/usr/bin/cpulimit -b -l 17 -p $PID
+			/usr/bin/cpulimit -b -l $MAXCPULIMIT -p $PID
 		fi
 	fi
 done
